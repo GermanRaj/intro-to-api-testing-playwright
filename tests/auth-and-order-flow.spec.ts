@@ -44,6 +44,12 @@ test.describe('Tallinn delivery API tests', () => {
     const response = await request.post(`${serviceURL}${loginPath}`, {
       data: requestBody,
     })
+
+    const responseBody = await response.text()
+
+    console.log('response code:', response.status())
+    console.log('response body:', responseBody)
+
     const jwt = await response.text()
     const orderResponse = await request.post(`${serviceURL}${orderPath}`, {
       data: orderDto.createOrderWithRandomData(),
