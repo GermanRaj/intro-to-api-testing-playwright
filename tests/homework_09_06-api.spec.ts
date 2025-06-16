@@ -15,7 +15,7 @@ test('put order with correct data and ID 1  should recieve 200 OK', async ({ req
     id: 1,
   }
   const requestHeaders = {
-    api_key: '1234567891234561',
+    api_key: '1234567891234562',
   }
   const response = await request.put('https://backend.tallinn-learning.ee/test-orders/1', {
     data: requestBody,
