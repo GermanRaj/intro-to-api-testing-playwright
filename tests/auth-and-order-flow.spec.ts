@@ -11,6 +11,7 @@ const orderPath = 'orders'
 const jwtPattern = /^eyJhb[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/
 
 
+
   test('login with correct data and verify auth token', async ({ request }) => {
     const requestBody = LoginDto.createLoginWithCorrectData()
     console.log('requestBody:', requestBody)
