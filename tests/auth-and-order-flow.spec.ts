@@ -10,7 +10,8 @@ const orderPath = 'orders'
 // JWT pattern in the form of a regular expression
 const jwtPattern = /^eyJhb[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/
 
-test.describe('Tallinn delivery API tests', () => {
+
+
   test('login with correct data and verify auth token', async ({ request }) => {
     const requestBody = LoginDto.createLoginWithCorrectData()
     console.log('requestBody:', requestBody)
@@ -65,4 +66,4 @@ test.describe('Tallinn delivery API tests', () => {
     expect.soft(orderResponseBody.status).toBe('OPEN')
     expect.soft(orderResponseBody.id).toBeDefined()
   })
-})
+
