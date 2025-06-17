@@ -66,5 +66,3 @@
 //     expect.soft(orderResponseBody.id).toBeDefined()
 //   })
 // })
-
-
