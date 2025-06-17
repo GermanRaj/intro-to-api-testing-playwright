@@ -13,16 +13,19 @@ const jwtPattern = /^eyJhb[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/
 test.describe('Tallinn delivery API tests', () => {
   test('login with correct data and verify auth token', async ({ request }) => {
     const requestBody = LoginDto.createLoginWithCorrectData()
+
+    const jwtRegex= /^eyJhb[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/;
     console.log('requestBody:', requestBody)
     const response = await request.post(`${serviceURL}${loginPath}`, {
       data: requestBody,
     })
     const responseBody = await response.text()
-
+    const jwtValue = await response.text();
     console.log('response code:', response.status())
     console.log('response body:', responseBody)
     expect(response.status()).toBe(StatusCodes.OK)
     expect(jwtPattern.test(responseBody)).toBeTruthy()
+    expect(jwtValue).toMatch(jwtRegex)
   })
 
   test('login with incorrect data and verify response code 401', async ({ request }) => {
@@ -44,13 +47,13 @@ test.describe('Tallinn delivery API tests', () => {
     const response = await request.post(`${serviceURL}${loginPath}`, {
       data: requestBody,
     })
-
+    const jwtRegex= /^eyJhb[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/;
     const responseBody = await response.text()
-
     console.log('response code:', response.status())
     console.log('response body:', responseBody)
 
     const jwt = await response.text()
+    const jwtValue = await response.text();
     const orderResponse = await request.post(`${serviceURL}${orderPath}`, {
       data: orderDto.createOrderWithRandomData(),
       headers: {
@@ -64,5 +67,7 @@ test.describe('Tallinn delivery API tests', () => {
     expect.soft(orderResponse.status()).toBe(StatusCodes.OK)
     expect.soft(orderResponseBody.status).toBe('OPEN')
     expect.soft(orderResponseBody.id).toBeDefined()
+    expect(jwtValue).toMatch(jwtRegex)
   })
 })
+
