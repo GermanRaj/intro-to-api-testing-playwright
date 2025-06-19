@@ -2,7 +2,6 @@ import { expect, test } from '@playwright/test'
 import { ApiClient } from './api-client'
 import { StatusCodes } from 'http-status-codes'
 
-
 test('login and create order with api client', async ({ request }) => {
   const apiClient = await ApiClient.getInstance(request)
   const orderId = await apiClient.createOrderAndReturnOrderId()

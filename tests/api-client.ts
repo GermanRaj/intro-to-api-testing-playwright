@@ -75,6 +75,5 @@ export class ApiClient {
     console.log('Order deleted: ')
     console.log(responseBody)
     return response
-
   }
 }
