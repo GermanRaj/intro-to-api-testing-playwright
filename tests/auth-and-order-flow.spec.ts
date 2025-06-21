@@ -116,7 +116,7 @@ test('login with PATCH  HTTPS method returns 405 Status', async ({ request }) =>
   expect.soft(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
 })
 
-test('Login with empty body data returns message Unathorized' , async ({ request }) => {
+test('Login with empty body data returns message Unathorized', async ({ request }) => {
   const emptyBody = {}
   const response = await request.post(`${serviceURL}${loginPath}`, {
     data: emptyBody,
