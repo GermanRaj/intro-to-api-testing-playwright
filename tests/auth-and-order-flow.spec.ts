@@ -166,3 +166,6 @@ test('Login with Symbols in body returns message Unathorized', async ({ request 
   console.log('response body:', responseBody)
   expect.soft(response.status()).toBe(StatusCodes.UNAUTHORIZED)
 })
+
+
+ 
