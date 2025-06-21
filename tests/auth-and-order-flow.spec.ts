@@ -1,13 +1,13 @@
 import { expect, test } from '@playwright/test'
 import { StatusCodes } from 'http-status-codes'
 import { LoginDto } from './dto/login-dto'
-import { orderDto } from './dto/order-dto'
+// import { orderDto } from './dto/order-dto'
 
 const serviceURL = 'https://backend.tallinn-learning.ee/'
 const loginPath = 'login/student'
-const orderPath = 'orders'
-
-const jwtPattern = /^eyJhb[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/
+// const orderPath = 'orders'
+//
+// const jwtPattern = /^eyJhb[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/
 
 // test('login with correct data, verify auth token and presence of valid token returns code 200', async ({
 //   request,
