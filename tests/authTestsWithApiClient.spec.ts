@@ -18,11 +18,10 @@ test('Succesful login and delete existing order with api client', async ({ reque
   expect.soft(responseBody).toBeTruthy()
 })
 
-// test('Succesful login and delete non existing order with api client', async ({ request }) => {
-//   const apiClient = await ApiClient.getInstance(request)
-//   const orderId = 999999
-//   console.log('orderId:', orderId)
-//   const response = await apiClient.deleteOrder(orderId)
-//   const responseBody = await response.json()
-//   expect(response.status()).toBe(StatusCodes.BAD_REQUEST)
-// })
+test('Succesful login and delete non existing order with api client', async ({ request }) => {
+  const apiClient = await ApiClient.getInstance(request)
+  const orderId = 999999
+  console.log('orderId:', orderId)
+  const response = await apiClient.deleteOrder(orderId)
+  expect(response.status()).toBe(StatusCodes.OK)
+})
