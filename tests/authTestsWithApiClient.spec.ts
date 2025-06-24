@@ -25,3 +25,19 @@ test('Succesful login and delete non existing order with api client', async ({ r
   const response = await apiClient.deleteOrder(orderId)
   expect(response.status()).toBe(StatusCodes.OK)
 })
+
+test('Succesfull Autorization, create order and get order by ID', async ({ request }) => {
+  const apiClient = await ApiClient.getInstance(request)
+  const orderId = await apiClient.createOrderAndReturnOrderId()
+  console.log('orderId:', orderId)
+  const getOrder = await apiClient.getOrder(orderId)
+  expect.soft(getOrder.status()).toBe(StatusCodes.OK)
+})
+
+test('Succesfull Autorization, create order and delete order by ID', async ({ request }) => {
+  const apiClient = await ApiClient.getInstance(request)
+  const orderId = await apiClient.createOrderAndReturnOrderId()
+  console.log('orderId:', orderId)
+  const deleteOrder = await apiClient.deleteOrder(orderId)
+  expect.soft(deleteOrder.status()).toBe(StatusCodes.OK)
+})
