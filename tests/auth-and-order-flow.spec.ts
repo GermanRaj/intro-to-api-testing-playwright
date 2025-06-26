@@ -168,3 +168,70 @@ test('Login with Symbols in body returns message Unathorized', async ({ request 
   console.log('response body:', responseBody)
   expect.soft(response.status()).toBe(StatusCodes.UNAUTHORIZED)
 })
+
+test('Authorization and get order by ID', async ({ request }) => {
+  const authorization = LoginDto.createLoginWithCorrectData()
+  const loginResponse = await request.post(`${serviceURL}${loginPath}`, {
+    data: authorization,
+  })
+  expect(loginResponse.status()).toBe(StatusCodes.OK)
+  const jwt = await loginResponse.text()
+
+  const newOrderData = orderDto.createOrderWithRandomData()
+  const createOrderResponse = await request.post(`${serviceURL}${orderPath}`, {
+    data: newOrderData,
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  })
+
+  expect(createOrderResponse.status()).toBe(StatusCodes.OK)
+  const createdOrder = await createOrderResponse.json()
+  const orderId = createdOrder.id
+  console.log('Created order ID:', orderId)
+
+  const getOrderResponse = await request.get(`${serviceURL}${orderPath}/${orderId}`, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  })
+
+  expect.soft(getOrderResponse.status()).toBe(StatusCodes.OK)
+  const foundOrder = await getOrderResponse.json()
+  expect.soft(foundOrder.id).toBe(orderId)
+  expect.soft(foundOrder.status).toBe('OPEN')
+  console.log('Found order:', foundOrder)
+})
+
+test('Authorization and delete order By ID', async ({ request }) => {
+  const authorization = LoginDto.createLoginWithCorrectData()
+  const loginResponse = await request.post(`${serviceURL}${loginPath}`, {
+    data: authorization,
+  })
+  expect.soft(loginResponse.status()).toBe(StatusCodes.OK)
+  const jwt = await loginResponse.text()
+
+  const newOrderData = orderDto.createOrderWithRandomData()
+  const createOrderResponse = await request.post(`${serviceURL}${orderPath}`, {
+    data: newOrderData,
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  })
+  expect.soft(createOrderResponse.status()).toBe(StatusCodes.OK)
+
+  const createdOrder = await createOrderResponse.json()
+  const orderId = createdOrder.id
+  console.log('Created order ID:', orderId)
+
+  const deleteOrderResponse = await request.delete(`${serviceURL}${orderPath}/${orderId}`, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  })
+  expect(deleteOrderResponse.status()).toBe(StatusCodes.OK)
+
+  const deletedOrder = await deleteOrderResponse.json()
+  console.log('Deleted Orders response:', deleteOrderResponse)
+  console.log('Is this order Deleted? :', deletedOrder)
+})

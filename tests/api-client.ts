@@ -72,7 +72,23 @@ export class ApiClient {
 
     expect(response.status()).toBe(StatusCodes.OK)
     const responseBody = await response.json()
-    console.log('Order deleted: ')
+    console.log('Is this order deleted?: ')
+    console.log(responseBody)
+    return response
+  }
+
+  async getOrder(orderId: number): Promise<APIResponse> {
+    console.log('Get Order...')
+    const response = await this.request.get(`${serviceURL}${deletePath}/${orderId}`, {
+      headers: {
+        Authorization: `Bearer ${this.jwt}`,
+      },
+    })
+    console.log('Get response: ', response)
+
+    expect(response.status()).toBe(StatusCodes.OK)
+    const responseBody = await response.json()
+    console.log('Order found: ')
     console.log(responseBody)
     return response
   }
